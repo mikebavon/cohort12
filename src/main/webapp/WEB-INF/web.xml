@@ -23,9 +23,33 @@
   <servlet>
     <servlet-name>Register</servlet-name>
     <servlet-class>app.RegisterPage</servlet-class>
+    <init-param>
+      <param-name>pageName</param-name>
+      <param-value>Register - Training Academy</param-value>
+    </init-param>
+    <init-param>
+      <param-name>pageHeader</param-name>
+      <param-value>Training Registration - IT</param-value>
+    </init-param>
+    <init-param>
+      <param-name>username</param-name>
+      <param-value>admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>password</param-name>
+      <param-value>12345</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>Register</servlet-name>
     <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Footer</servlet-name>
+    <servlet-class>app.FooterPage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Footer</servlet-name>
+    <url-pattern>/footer</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -1,5 +1,7 @@
 package app;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,12 +15,36 @@ public class RegisterPage extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException{
-        PrintWriter writer = resp.getWriter();
 
+        ServletConfig config = getServletConfig();
+
+        String username = req.getParameter("username");
+        if (username == null)
+            username = "";
+        String password = req.getParameter("password");
+        if  (password == null)
+            password = "";
+
+        System.out.println("submitted: " + username + " && " + password);
+
+        String usernameConfig = config.getInitParameter("username");
+        String passwordConfig = config.getInitParameter("password");
+        System.out.println("configs: username - " + usernameConfig);
+        System.out.println("configs: password - " + passwordConfig);
+
+        if(!(username.equalsIgnoreCase(usernameConfig)
+                && password.equalsIgnoreCase(passwordConfig))){
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/");
+            dispatcher.forward(req, resp);
+        }
+
+        PrintWriter writer = resp.getWriter();
         writer.println("<!DOCTYPE html>");
         writer.println("<html>");
         writer.println("<head>");
-        writer.println("<title>Register - Training Academy</title>");
+        writer.println("<title>");
+        writer.println(config.getInitParameter("pageName"));
+        writer.println("</title>");
         writer.println("<style>");
         writer.println("body { font-family: Arial; margin: 40px; background-color: #f4f6f8; }");
         writer.println("header { background-color: #2c3e50; color: white; padding: 15px; }");
@@ -33,7 +59,9 @@ public class RegisterPage extends HttpServlet {
 
 // Header
         writer.println("<header>");
-        writer.println("<h1>Training Registration</h1>");
+        writer.println("<h1>");
+        writer.println(config.getInitParameter("pageHeader"));
+        writer.println("</h1>");
         writer.println("</header>");
 
 // Form
@@ -56,10 +84,8 @@ public class RegisterPage extends HttpServlet {
         writer.println("</form>");
         writer.println("</section>");
 
-// Navigation
-        writer.println("<section>");
-        writer.println("<a href='./'>&larr; Back to Home</a>");
-        writer.println("</section>");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("footer");
+        dispatcher.include(req, resp);
 
         writer.println("</body>");
         writer.println("</html>");
@@ -96,12 +122,26 @@ public class RegisterPage extends HttpServlet {
 
         Enumeration<String> paramNames = req.getParameterNames();
 
+        boolean studentIsMike = false;
         while(paramNames.hasMoreElements()){
             String paramName = paramNames.nextElement();
+            String paramValue = req.getParameterValues(paramName)[0];
 
             writer.println("<h1>" + paramName + "</h1>: ");
-            writer.println(req.getParameterValues(paramName)[0]);
+            writer.println(paramValue);
             writer.println("<br/>");
+
+            if (!studentIsMike)
+                studentIsMike = paramValue.contains("mike");
+        }
+
+        System.out.println("studentIsMike: " + studentIsMike);
+        if (studentIsMike) {
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/");
+            dispatcher.forward(req, resp);
+        } else {
+            RequestDispatcher dispatcher = req.getRequestDispatcher("footer");
+            dispatcher.include(req, resp);
         }
 
         writer.println("</p>");
@@ -109,12 +149,11 @@ public class RegisterPage extends HttpServlet {
 
 // Navigation
         writer.println("<section>");
-        writer.println("<a href=\"./register\">&larr; Register Another Student</a>");
+        writer.println("<a href=\"./register\">&larr; Register Another Student OR </a>");
         writer.println("</section>");
 
         writer.println("</body>");
         writer.println("</html>");
-
 
     }
 }

@@ -44,3 +44,20 @@ change directory to wildfly-version/bin
 unix/linux - sh standalone.sh or ./standalone.sh
 windows - standalone.bat
 
+INTERFACES
+a) HttpServletRequest
+1. getParameter(String name);
+2. getParameterNames()
+3. getParameterValues
+4. getHeader()
+5. getHeaders()
+6. getHeaderNames()
+
+b) HttpServletResponse
+
+c) RequestDispatcher
+
+d) ServletConfig
+
+
+
