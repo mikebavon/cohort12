@@ -13,6 +13,8 @@ import java.io.Serializable;
     tableUrl = "./school_lists",
     registerUrl = "./register_school")
 public class School implements Serializable {
+    private Long id;
+
     @Cohort12FormField(label = "School Name",
             name = "schoolName",
             placeholder = "Please enter School Name")
@@ -23,6 +25,14 @@ public class School implements Serializable {
             placeholder = "Please enter School Location")
     @Cohort12TableCol(label = "School Location")
     private String schoolLocation;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getSchoolName() {
         return schoolName;

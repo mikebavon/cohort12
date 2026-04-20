@@ -12,6 +12,8 @@ import app.framework.Cohort12TableCol;
         registerUrl = "./register_trainer")
 public class Trainer{
 
+    private Long id;
+
     @Cohort12FormField(label = "Trainer Name",
             placeholder = "Please enter Name")
     @Cohort12TableCol(label = "Trainer Name")
@@ -19,8 +21,16 @@ public class Trainer{
 
     @Cohort12FormField(label = "Trainer Gender",
             placeholder = "Please enter  Gender")
-    @Cohort12TableCol(label = "Trainer ID")
+    @Cohort12TableCol(label = "Trainer Gender")
     private String gender;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

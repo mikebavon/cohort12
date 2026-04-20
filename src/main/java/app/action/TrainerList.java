@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/trainer_lists")
-public class TrainerList extends BaseAction<Trainer> {
+public class TrainerList extends BaseListAction<Trainer> {
 
-    
+   
 }
 

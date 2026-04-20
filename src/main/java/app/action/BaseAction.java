@@ -3,6 +3,7 @@ package app.action;
 
 import app.framework.Cohort12Framework;
 import app.framework.Cohort12Table;
+import app.utility.GenericDao;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -74,19 +75,13 @@ public class BaseAction<T> extends HttpServlet {
         //if session exist use it, otherwise create a new one
         HttpSession session = req.getSession();
 
-        List<T> register;
-        if (session.getAttribute(this.dbName()) == null)
-            register = new ArrayList<>();
-        else
-            register = (List<T>) session.getAttribute(this.dbName());
-
         try {
-            register.add(this.serializeForm(req.getParameterMap()));
+            T entity = this.serializeForm(req.getParameterMap());
+            GenericDao<T> dao = new GenericDao<>(this.getType());
+            dao.save(entity);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        session.setAttribute(this.dbName(), register);
 
         if (this.getType().isAnnotationPresent(Cohort12Table.class)) {
             resp.sendRedirect(this.getType()
@@ -159,17 +154,12 @@ public class BaseAction<T> extends HttpServlet {
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> returnData(HttpSession session){
+    public List<T> returnData(){
 
         System.out.println("DB NAME: " + this.dbName());
 
-        List<T> register;
-        if (session.getAttribute(this.dbName()) == null)
-            register = new ArrayList<>();
-        else
-            register = (List<T>) session.getAttribute(this.dbName());
-
-        return register;
+        GenericDao<T> dao = new GenericDao<>(this.getType());
+        return dao.findAll();
     }
 
 }

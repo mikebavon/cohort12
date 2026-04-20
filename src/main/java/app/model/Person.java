@@ -14,6 +14,8 @@ import java.io.Serializable;
         registerUrl = "./register_person")
 public class Person implements Serializable {
 
+    private Long id;
+
     @Cohort12FormField(label = "Person Name",
         placeholder = "Please enter Person Name")
     @Cohort12TableCol(label = "Person Name")
@@ -34,6 +36,14 @@ public class Person implements Serializable {
     }
 
     public Person(){}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

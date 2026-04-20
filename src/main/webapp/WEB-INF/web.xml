@@ -9,6 +9,23 @@
     <param-value>COHORT 12 | SERIOUS TEAM</param-value>
   </context-param>
 
+  <context-param>
+    <param-name>db.url</param-name>
+    <param-value>jdbc:mysql://localhost:3306/cohort12_db</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db.user</param-name>
+    <param-value>root</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db.password</param-name>
+    <param-value>kisero1173</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>app.utility.DatabaseInitializer</listener-class>
+  </listener>
+
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

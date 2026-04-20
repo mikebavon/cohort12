@@ -30,17 +30,21 @@ import java.util.Map;
 
 public class BaseListAction<T> extends BaseAction <T>{
 
-    @SuppressWarnings("unchecked")
+     @SuppressWarnings("unchecked")
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //if session exist use it, otherwise create a new one
         HttpSession session = req.getSession();
 
         PrintWriter writer = resp.getWriter();
 
+        // Get the entity class name for dynamic title
+        String entityName = getType().getSimpleName();
+        String pageTitle = entityName + " List - Training Academy";
+
         writer.println("<!DOCTYPE html>");
         writer.println("<html>");
         writer.println("<head>");
-        writer.println("<title>About Us - Training Academy</title>");
+        writer.println("<title>" + pageTitle + "</title>");
         writer.println("<style>");
         writer.println("body { font-family: Arial; margin: 40px; background-color: #f4f6f8; }");
         writer.println("header { background-color: #2c3e50; color: white; padding: 15px; }");
@@ -53,17 +57,18 @@ public class BaseListAction<T> extends BaseAction <T>{
 
 // Header
         writer.println("<header>");
-        writer.println("<h1>About COHORT 12 Training PORTA</h1>");
+        writer.println("<h1>" + entityName + " List</h1>");
         writer.println("</header>");
 
-        Cohort12Framework.htmlTable(writer, getType(), returnData(session));
+        writer.println("<p>Data count: " + returnData().size() + "</p>");
+
+        Cohort12Framework.htmlTable(writer, getType(), returnData());
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("footer");
         dispatcher.include(req, resp);
 
         writer.println("</body>");
         writer.println("</html>");
-
     }
     
 }

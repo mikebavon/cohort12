@@ -46,18 +46,21 @@ public class Cohort12Framework {
         writer.println("<table style='border-collapse: collapse; width: 50%; font-family: Arial, sans-serif;'>");
 
         List<String> fieldNames = new ArrayList<>();
+        List<String> fieldLabels = new ArrayList<>();
         for (Field field : clazz.getDeclaredFields()) {
             if (!field.isAnnotationPresent(Cohort12TableCol.class))
                 continue;
 
             fieldNames.add(field.getName());
+            Cohort12TableCol col = field.getAnnotation(Cohort12TableCol.class);
+            fieldLabels.add(col.label());
         }
 
         writer.println("<tr>");
-        for (String fieldName : fieldNames) {
+        for (String label : fieldLabels) {
 
             // Header row
-            writer.println("<th style='border: 1px solid #000; padding: 8px; background-color: #f2f2f2;'>" + fieldName + "</th>");
+            writer.println("<th style='border: 1px solid #000; padding: 8px; background-color: #f2f2f2;'>" + label + "</th>");
         }
         writer.println("</tr>");
 
