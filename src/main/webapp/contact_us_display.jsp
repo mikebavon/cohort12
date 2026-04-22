@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,16 +60,13 @@
 
 <div class="card">
     <h1>Thank You!</h1>
-        Name: <%= request.getParameter("name") %><br/>
-        Email: <%= request.getParameter("email") %><br/>
-        Subject: <%= request.getParameter("subject") %><br/>
-        Message: <%= request.getParameter("message") %><br/>
-        Country: <%= request.getParameter("country") %><br/>
-        County: <%= request.getParameter("county") %><br/>
-        Town: <%= request.getParameter("town") %><br/>
+        Name: ${param.name}<br/>
+        Email: ${param.email}<br/>
+        Subject: <c:out value="${param.subject}" default="No Subject"/><br/>
+        Message: ${param.message}<br/>
     <p>Your message has been successfully submitted. We will get back to you shortly.</p>
 
-    <a href="index.html" class="button">Back to Home</a>
+    <a href="index.jsp" class="button">Back to Home</a>
 </div>
 
 <jsp:include page="footer.jsp" />

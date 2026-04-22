@@ -118,11 +118,54 @@ j) Jsp -  write java inside html
         <jsp:setProperty>
         <jsp:getProperty>
 
+    JSP EXPRESSIONS LANGUAGE (EL)
+        -to simplify data access of java beans and implicit objects
+        -arithmetic +,-,*, /, %
+            ${20/10} or ${beanName.number/beanName.number2}
+        -Logical and relation operators
+            == and eq
+            != and ne
+            < and lt
+            > and gt
+            >= and ge
+            <= and le
+
+    JSTL - JSP Standard Tag Library
+        collection of ready-made tags..that
+        replaces scriptlets, makes jsp cleaner, readable
+        Library
+            1. Core - Logic, Loops, Variables -- prefix c
+            2. Formatting - format dates, numbers etc fmt
+            3. Functions - prebuilt function..methods fn
 
 
+            4. SQL prefix - sql
+            5. XML prefix - x
+
+        Core Library
+            <c:out> - output data
+            <c:set> - set variable
+            <c:if>
+            <c:choose>
+            <c:forEach>
 
 
+Convert Db session to RDBMS (MYSQL, POSTGRES..ORACLE)
+Make jdbc to be single...use ServletContextListener..
+on startup
+    1. System should create database automatically if it does not exist
+    2. System should create table of models/entities automatically if the dont exist
+    3. Queries should also be generated dynamically
 
 
+CONTEXT DEPENDENCY INJECTION(CDI)
+EJB
+JPA & JTA (INCLUDE BEAN VALIDATION)
+WEB SERVICES
+    -JAX-RS - REST
+    -JAX-WS - SOAP
+    -WEBSOCKET
+JMS
+JAKARTA SECURITY
 
 

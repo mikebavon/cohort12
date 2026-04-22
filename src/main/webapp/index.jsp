@@ -1,7 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="app.utility.Courses" %>
 <%@ page import="java.time.LocalTime" %>
-
 
 <%! Courses courses = new Courses(); %>
 <!DOCTYPE html>
@@ -36,37 +37,24 @@
 <body>
 
     <%-- Header --%>
+    <jsp:useBean id="now" class="java.util.Date" />
+    <fmt:formatDate value="${now}" pattern = "H" var = "hour" />
+
     <header>
         <h1>
-        <%
-            LocalTime now = LocalTime.now();
-            int hour = now.getHour();
-
-            if (hour < 12){
-        %>
-        Good Morning<br/>
-        <%
-            } else {
-        %>
-        Good Afternoon<br/>
-        <%
-            }
-        %>
-        Welcome to <%= application.getInitParameter("applicationName") %> Training PORTAL</h1>
-        <p>Empowering Developers with Real-World Skills</p>
-        <%!
-
-            public int addTotalSum(){
-                int totalSum = 0;
-                for (int x = 0; x< 20; x++)
-                    totalSum += x;
-
-                return totalSum;
-            }
-        %>
-        <p>
-        <%= addTotalSum() %>
-        </p>
+        <c:choose>
+            <c:when test="${hour < 12}">
+                Good Morning!! Welcome to our portal: Hour <c:out value="${hour}"/><br/>
+            </c:when>
+            <c:when test="${hour > 17}">
+                Good Evening!! Welcome to our portal: Hour <c:out value="${hour}"/><br/>
+            </c:when>
+            <c:otherwise>
+                Good Afternoon!! Welcome to our portal<br/>
+            </c:otherwise>
+        </c:choose>
+        Welcome to ${applicationScope.applicationName} Training PORTAL</h1>
+        <c:out value="<p>Empowering Developers with Real-World Skills</p>" escapeXml="false"/>
     </header>
 
     <%-- Courses section --%>
@@ -84,20 +72,33 @@
             String [] aboutInfos = {
                 "<p>Our training programs focus on hands-on experience and real-world projects.</p>",
                 "<p>We help developers build strong backend systems using modern technologies.</p>",
-                "<p>Mentorship and practical coding sessions are at the core of our learning approach.</p>"};
-
-            for (String aboutInfo: aboutInfos)
-                out.print(aboutInfo);
-
+                "<p>Mentorship and practical coding sessions are at the core of our learning approach.</p>"
+            };
+            request.setAttribute("aboutInfos", aboutInfos);
         %>
+        <c:forEach var="aboutInfo" items="${aboutInfos}">
+            <p>${aboutInfo}</p>
+        </c:forEach>
 
     </section>
 
     <!-- Schedule -->
+
+    <jsp:useBean id="weekdaySchedule" class="app.model.Schedule" />
+    <jsp:setProperty name="weekdaySchedule" property="scheduleType" />
+    <jsp:setProperty name="weekdaySchedule" property="scheduleTime" />
+
+    <jsp:useBean id="weekendSchedule" class="app.model.Schedule" />
+    <jsp:setProperty name="weekendSchedule" property="scheduleType" value="Weekend Only Bootcamps" />
+    <jsp:setProperty name="weekendSchedule" property="scheduleTime" value="9:00 AM - 3:00 PM" />
     <section>
         <h2>Upcoming Schedule</h2>
-        <p>Weekday Classes: 6:00 PM - 8:00 PM</p>
-        <p>Weekend Bootcamps: 9:00 AM - 1:00 PM</p>
+        <p>
+        ${weekdaySchedule.scheduleType} : ${weekdaySchedule.scheduleTime}
+        </p>
+        <p>
+        ${weekendSchedule.scheduleType} : ${weekendSchedule.scheduleTime}
+        </p>
     </section>
 
     <jsp:include page="footer.jsp" />
