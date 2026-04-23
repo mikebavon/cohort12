@@ -5,8 +5,8 @@ import app.framework.*;
 import java.io.Serializable;
 
 
-@PageMenuItem(label = "Registered Persons", url = "./person_lists")
-@DbTable(name = "persons")
+//@PageMenuItem(label = "Registered Persons", url = "./person_lists")
+//@DbTable(name = "persons")
 @Cohort12Form(label = "Person Register",
         actionUrl = "./register_person")
 @Cohort12Table(label = "Persons",

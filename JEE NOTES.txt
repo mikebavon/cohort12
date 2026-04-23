@@ -158,6 +158,31 @@ on startup
     3. Queries should also be generated dynamically
 
 CONTEXT DEPENDENCY INJECTION(CDI)
+    IoC (principle) - giving a container/framework object creation
+        and management
+        - no longer do object creation and management in code
+
+    Dependency Injection (DI) - implementation of IOC
+
+    in JEE Dependency Injection is achieved through
+        Context Dependency Injection (CDI)
+        - JEE specification for DI
+        -type-safe,
+        flexible and manage dependencies of object lifecycle
+
+    KEY CONCEPTS
+        a) context - environment/scope that the object exists
+        b) dependency injection - object created automatically
+        c) CDI containers - the engine that creates
+            and manages the objects server/framework
+            - in my case wildfly
+        d) bean - java class(blueprint) to be management by containers
+        e) contextual instance - which an object created by
+            the container from bean.
+
+
+
+
 EJB
 JPA & JTA (INCLUDE BEAN VALIDATION)
 WEB SERVICES

@@ -100,7 +100,7 @@ public class Cohort12Framework {
     }
 
     public static String generateMenuItem(){
-        Set<Class<?>> entities = ClassScanner.scanForDbTables("app.model");
+        Set<Class<?>> entities = ClassScanner.scanForMenuItem("app.model");
 
         return entities.stream()
             .filter(clazz -> clazz.isAnnotationPresent(PageMenuItem.class))

@@ -30,6 +30,8 @@ import java.util.Map;
 
 public class BaseAction<T> extends HttpServlet {
 
+    T object;
+
     GenericDao<T, Integer> genericDao = new GenericDao<>(this.getType());
 
     @SuppressWarnings("unchecked")
