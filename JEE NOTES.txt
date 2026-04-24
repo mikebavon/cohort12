@@ -134,9 +134,9 @@ j) Jsp -  write java inside html
         collection of ready-made tags..that
         replaces scriptlets, makes jsp cleaner, readable
         Library
-            1. Core - Logic, Loops, Variables -- prefix c
-            2. Formatting - format dates, numbers etc fmt
-            3. Functions - prebuilt function..methods fn
+            1. Core - Logic, Loops, Variables -- prefix c *
+            2. Formatting - format dates, numbers etc fmt *
+            3. Functions - prebuilt function..methods fn *
 
 
             4. SQL prefix - sql
@@ -157,8 +157,58 @@ on startup
     2. System should create table of models/entities automatically if the dont exist
     3. Queries should also be generated dynamically
 
-
 CONTEXT DEPENDENCY INJECTION(CDI)
+    IoC (principle) - giving a container/framework object creation
+        and management
+        - no longer do object creation and management in code
+
+    Dependency Injection (DI) - implementation of IOC
+
+    in JEE Dependency Injection is achieved through
+        Context Dependency Injection (CDI)
+        - JEE specification for DI
+        -type-safe,
+        flexible and manage dependencies of object lifecycle
+
+    KEY CONCEPTS
+        a) context - environment/scope that the object exists
+        b) dependency injection - object created automatically
+        c) CDI containers - the engine that creates
+            and manages the objects server/framework
+            - in my case wildfly
+        d) bean - java class(blueprint) to be management by containers
+        e) contextual instance - which an object created by
+            the container from bean.
+
+    CDI CONTEXTS(SCOPE)
+    @ApplicationScope - one object/instance for the entire app
+    @RequestScope - new object/instance per request
+    @SessionScope - one object/instance per session
+    @Dependent - new object/instance per injection (@Inject)
+
+
+    QUALIFIERS
+
+    mpesa
+    card
+    bankTransfer
+
+
+    public class Contribution{
+
+        @Inject
+        @PesaPal
+        Payment payment;
+
+        public void procesPayment(BigDecimal amount) {
+            payment.process(amount);
+        }
+
+    }
+
+
+
+
 EJB
 JPA & JTA (INCLUDE BEAN VALIDATION)
 WEB SERVICES
