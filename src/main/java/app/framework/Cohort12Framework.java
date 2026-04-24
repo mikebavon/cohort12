@@ -18,9 +18,10 @@ public class Cohort12Framework {
         Cohort12Form formAnnot = clazz.getAnnotation(Cohort12Form.class);
 
         StringBuilder formBuilder = new StringBuilder();
+        formBuilder.append("<div class='container'>");
         formBuilder.append("<div class='card'>");
-        formBuilder.append("<h2>" + formAnnot.label() + "</h2>");
-        formBuilder.append("<form method='" + formAnnot.method() + "' action='" + formAnnot.actionUrl() + "'>");
+        formBuilder.append("<h2>").append(formAnnot.label()).append("</h2>");
+        formBuilder.append("<form method='").append(formAnnot.method()).append("' action='").append(formAnnot.actionUrl()).append("'>");
 
         formBuilder.append("<div class='form-group'>");
         for (Field field : clazz.getDeclaredFields()) {
@@ -28,9 +29,8 @@ public class Cohort12Framework {
                 continue;
 
             Cohort12FormField fieldInfo = field.getAnnotation(Cohort12FormField.class);
-            formBuilder.append("<label>" + fieldInfo.label() + ":</label>");
-            formBuilder.append("<input type='text' name='"
-                + (fieldInfo.name().isEmpty()? field.getName() : fieldInfo.name()) + "' placeholder='Enter " + fieldInfo.placeholder() + "' required />");
+            formBuilder.append("<label>").append(fieldInfo.label()).append(":</label>");
+            formBuilder.append("<input type='text' name='").append(fieldInfo.name().isEmpty() ? field.getName() : fieldInfo.name()).append("' placeholder='Enter ").append(fieldInfo.placeholder()).append("' required />");
         }
         formBuilder.append("</div>");
 
@@ -39,9 +39,12 @@ public class Cohort12Framework {
 
         if (clazz.isAnnotationPresent(Cohort12Table.class)) {
             Cohort12Table cohort12Table = clazz.getAnnotation(Cohort12Table.class);
-            formBuilder.append("<a href=\"" + cohort12Table.tableUrl() + "\"  class='back-link'>&larr; List Registered " + cohort12Table.label() + " </a>");
+            formBuilder.append("<a href=\"")
+                .append(cohort12Table.tableUrl())
+                .append("\"  class='back-link'>&larr; List Registered ").append(cohort12Table.label()).append(" </a>");
         }
 
+        formBuilder.append("</div>");
         formBuilder.append("</div>");
 
         return formBuilder.toString();
@@ -63,7 +66,7 @@ public class Cohort12Framework {
             .append(cohort12Table.label())
             .append(" Registered</h2>");
 
-        tableBuilder.append("<table style='border-collapse: collapse; width: 50%; font-family: Arial, sans-serif;'>");
+        tableBuilder.append("<table>");
 
         List<String> fieldNames = new ArrayList<>();
         for (Field field : clazz.getDeclaredFields()) {
@@ -77,6 +80,7 @@ public class Cohort12Framework {
         for (String fieldName : fieldNames)
             tableBuilder.append("<th>").append(fieldName).append("</th>");
         tableBuilder.append("</tr></thead>");
+        tableBuilder.append("<tbody>");
 
         for (Object data : tableData) {
             tableBuilder.append("<tr>");
@@ -84,8 +88,9 @@ public class Cohort12Framework {
                 try {
                     Field field = data.getClass().getDeclaredField(fieldName);
                     field.setAccessible(true);
-                    tableBuilder.append("<td style='border: 1px solid #000; padding: 8px;'>"
-                            + field.get(data) + "</td>");
+                    tableBuilder.append("<td style='border: 1px solid #000; padding: 8px;'>")
+                        .append(field.get(data))
+                        .append("</td>");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -93,10 +98,13 @@ public class Cohort12Framework {
             }
             tableBuilder.append("</tr>");
         }
-
+        tableBuilder.append("</tbody>");
         tableBuilder.append("</table>");
 
-        tableBuilder.append("<a href=\"" + cohort12Table.registerUrl() + "\">&larr; Register " + cohort12Table.label() + " </a>");
+        tableBuilder.append("<a href=\"")
+            .append(cohort12Table.registerUrl())
+            .append("\" class='back-link'>&larr; Register ")
+            .append(cohort12Table.label()).append(" </a>");
         tableBuilder.append("</div>");
         tableBuilder.append("</div>");
 
