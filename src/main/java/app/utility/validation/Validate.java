@@ -1,11 +1,8 @@
 package app.utility.validation;
 
-import app.model.Person;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.enterprise.context.ApplicationScoped;
+
 
 @ApplicationScoped
 public class Validate {
@@ -14,14 +11,14 @@ public class Validate {
 
 
     public boolean traineeName(String name){
-        System.out.println("Validation Number: " + validationCounter++);
+        System.out.println("Validating Trainee(Student) - Validation Number: " + validationCounter++);
         return name != null && !name.toLowerCase().contains("john")
             && !name.toLowerCase().contains("nancy");
     }
 
 
     public boolean trainerName(String name){
-        System.out.println("Validation Number: " + validationCounter++);
+        System.out.println("Validating Trainer(Teacher) Validation Number: " + validationCounter++);
         return name != null &&
             !name.toLowerCase().contains("pamela")
             &&  !name.toLowerCase().contains("gideon")
