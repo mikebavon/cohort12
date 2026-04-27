@@ -1,5 +1,6 @@
 package app.framework;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,9 +14,14 @@ import java.io.PrintWriter;
 @WebServlet("/app_page")
 public class AppPage extends HttpServlet {
 
+    @Inject
+    private Cohort12Framework framework;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+
+
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -26,6 +32,9 @@ public class AppPage extends HttpServlet {
         out.println("<meta charset='UTF-8'>");
         out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
         out.println("<title>Cohort Training</title>");
+
+        /* FONT AWESOME CDN */
+        out.println("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'>");
 
         out.println("<style>");
         out.println(":root { --primary:#2563eb; --dark:#0f172a; --light:#f8fafc; }");
@@ -64,6 +73,14 @@ public class AppPage extends HttpServlet {
         out.println("th{background:var(--primary);color:#fff;}");
         out.println("tr:nth-child(even){background:#f1f5f9;}");
 
+        /* ACTION BUTTONS */
+        out.println(".actions{display:flex;gap:10px;}");
+        out.println(".icon-btn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;text-decoration:none;color:#fff;font-size:14px;transition:.2s;}");
+        out.println(".edit-btn{background:#3b82f6;}");
+        out.println(".edit-btn:hover{background:#2563eb;}");
+        out.println(".delete-btn{background:#ef4444;}");
+        out.println(".delete-btn:hover{background:#dc2626;}");
+
         /* FORM */
         out.println(".form-group{margin-bottom:15px;}");
         out.println("label{display:block;margin-bottom:5px;font-weight:500;}");
@@ -90,7 +107,7 @@ public class AppPage extends HttpServlet {
         out.println("</div>");
         out.println("<div class='nav-links'>");
         out.println("<a href='./home'>Home</a>");
-        out.println(Cohort12Framework.generateMenuItem());
+        out.println(framework.generateMenuItem());
         out.println("</div>");
         out.println("</div>");
 

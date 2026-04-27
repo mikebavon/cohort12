@@ -188,8 +188,20 @@ CONTEXT DEPENDENCY INJECTION(CDI)
 
 
     QUALIFIERS
+        - Injection Points
+            -Fields
+            -Constructor ---- assignment
+            -Setter Method --- assignment
+        -Multiple qualifiers
 
+        -Built in qualifiers
+            -@Named
+                -Constructor ---- assignment
+                -Setter Method --- assignment
+            -@Default
+            -@Any
 
+        -also inject datasource ---------assignment
 
 
 EJB
