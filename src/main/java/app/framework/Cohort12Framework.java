@@ -1,6 +1,10 @@
 package app.framework;
 
 import app.utility.helper.ClassScanner;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jdk.jfr.Name;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -8,9 +12,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@ApplicationScoped
 public class Cohort12Framework {
 
-    public static String htmlForm(Class<?> clazz){
+    @Inject
+    private ClassScanner clazzScanner;
+
+
+    public String htmlForm(Class<?> clazz){
 
         if (!clazz.isAnnotationPresent(Cohort12Form.class))
             return "";
@@ -50,7 +59,7 @@ public class Cohort12Framework {
         return formBuilder.toString();
     }
 
-    public static String htmlTable(Class<?> clazz,
+    public String htmlTable(Class<?> clazz,
          List<?> tableData) {
 
         if (!clazz.isAnnotationPresent(Cohort12Table.class))
@@ -68,25 +77,43 @@ public class Cohort12Framework {
 
         tableBuilder.append("<table>");
 
-        List<String> fieldNames = new ArrayList<>();
+        class ColMetaData {
+            final String fieldName;
+            final String columnName;
+
+            ColMetaData(String fieldName, String columnName){
+                this.fieldName = fieldName;
+                this.columnName = columnName;
+            }
+
+        }
+
+        List<ColMetaData> colsMedaData = new ArrayList<>();
         for (Field field : clazz.getDeclaredFields()) {
             if (!field.isAnnotationPresent(Cohort12TableCol.class))
                 continue;
 
-            fieldNames.add(field.getName());
+            Cohort12TableCol tableCol = field.getAnnotation(Cohort12TableCol.class);
+
+            colsMedaData.add(new ColMetaData(field.getName(), tableCol.label()));
         }
 
+        int colWidth = 96/colsMedaData.size();
         tableBuilder.append("<thead><tr>");
-        for (String fieldName : fieldNames)
-            tableBuilder.append("<th>").append(fieldName).append("</th>");
+        for (ColMetaData colMedaData : colsMedaData)
+            tableBuilder.append("<th style='width:")
+                .append(colWidth).append("%;'>")
+                .append(colMedaData.columnName).append("</th>");
+
+        tableBuilder.append("<th style='width:2%;></th><th style='width:2%;></th>");
         tableBuilder.append("</tr></thead>");
         tableBuilder.append("<tbody>");
 
         for (Object data : tableData) {
             tableBuilder.append("<tr>");
-            for (String fieldName : fieldNames) {
+            for (ColMetaData colMedaData : colsMedaData) {
                 try {
-                    Field field = data.getClass().getDeclaredField(fieldName);
+                    Field field = data.getClass().getDeclaredField(colMedaData.fieldName);
                     field.setAccessible(true);
                     tableBuilder.append("<td style='border: 1px solid #000; padding: 8px;'>")
                         .append(field.get(data))
@@ -96,7 +123,34 @@ public class Cohort12Framework {
                 }
 
             }
+            tableBuilder.append("<td class='actions'>");
+
+            try {
+                Field idField = clazz.getDeclaredField("id");
+                idField.setAccessible(true);
+
+                /* EDIT BUTTON */
+                tableBuilder.append("<a href='./edit_trainer?id=")
+                    .append(idField.get(data))
+                    .append("' class='icon-btn edit-btn' title='Edit'>");
+                tableBuilder.append("<i class='fa-solid fa-pen'></i>");
+                tableBuilder.append("</a>");
+
+                /* DELETE BUTTON */
+                tableBuilder.append("<a href='./delete_trainer?id=")
+                    .append(idField.get(data))
+                    .append("' class='icon-btn delete-btn' title='Delete' onclick='return confirm(\"Delete this trainer?\")'>");
+                tableBuilder.append("<i class='fa-solid fa-trash'></i>");
+                tableBuilder.append("</a>");
+
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
+            tableBuilder.append("</td>");
+
             tableBuilder.append("</tr>");
+
         }
         tableBuilder.append("</tbody>");
         tableBuilder.append("</table>");
@@ -112,8 +166,8 @@ public class Cohort12Framework {
 
     }
 
-    public static String generateMenuItem(){
-        Set<Class<?>> entities = ClassScanner.scanForMenuItem("app.model");
+    public String generateMenuItem(){
+        Set<Class<?>> entities = clazzScanner.scanForMenuItem("app.model");
 
         return entities.stream()
             .filter(clazz -> clazz.isAnnotationPresent(PageMenuItem.class))

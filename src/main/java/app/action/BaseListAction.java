@@ -16,7 +16,7 @@ public class BaseListAction<T> extends BaseAction<T> {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute(PageContent.CONTENT.name(), Cohort12Framework.htmlTable(getType(), returnData()));
+        request.setAttribute(PageContent.CONTENT.name(), super.framework.htmlTable(getType(), returnData()));
         RequestDispatcher rd = request.getRequestDispatcher("./app_page");
         rd.include(request, response);
     }

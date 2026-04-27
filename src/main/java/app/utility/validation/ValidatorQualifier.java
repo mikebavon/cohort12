@@ -14,7 +14,7 @@ public @interface ValidatorQualifier {
 
     ValidationChoice value();
 
-    public enum ValidationChoice {
+    enum ValidationChoice {
         TRAINEE, TRAINER, COURSE, SCHOOL
     }
 
