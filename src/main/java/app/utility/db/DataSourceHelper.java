@@ -13,11 +13,11 @@ public class DataSourceHelper {
 
     private static HikariDataSource dataSource;
 
-    private static final String HOST = "localhost";
-    private static final int PORT = 3306;
-    private static final String DB_NAME = "training_app";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String HOST = System.getenv("DB_HOST") != null ? System.getenv("DB_HOST") : "localhost";
+    private static final int PORT = System.getenv("DB_PORT") != null ? Integer.parseInt(System.getenv("DB_PORT")) : 3306;
+    private static final String DB_NAME = System.getenv("DB_NAME") != null ? System.getenv("DB_NAME") : "cohort12_db";
+    private static final String USER = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "root";
+    private static final String PASSWORD = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : "";
 
     private DataSourceHelper() {}
 
