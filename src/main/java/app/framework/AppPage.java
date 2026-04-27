@@ -39,14 +39,24 @@ public class AppPage extends HttpServlet {
         out.println(".nav-links a{color:#fff;text-decoration:none;padding:10px 15px;border-radius:6px;transition:.3s;}");
         out.println(".nav-links a:hover{background:var(--primary);}");
 
+        out.println(".hero { padding:60px 20px; text-align:center; background:#111827; color:#fff; }");
+        out.println(".hero h1 { font-size:36px; margin-bottom:10px; }");
+        out.println(".hero p { font-size:18px; color:#d1d5db; }");
+
+        out.println(".section { padding:40px 20px; max-width:1000px; margin:auto; }");
+        out.println(".section h2 { text-align:center; margin-bottom:20px; }");
+
+        out.println(".features { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }");
+
 
         /* CONTENT */
-        out.println(".container{max-width:900px;margin:40px auto;padding:20px;}");
-
+        out.println(".container{width: 90%;max-width: 1400px; margin:40px auto;padding:20px;}");
 
         /* CARD */
         out.println(".card{background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.08);}");
 
+        out.println(".card h3 { margin-top:0; font-size:18px; }");
+        out.println(".card p { font-size:14px; color:#555; }");
 
         /* TABLE */
         out.println("table{width:100%;border-collapse:collapse;margin-top:15px;}");
