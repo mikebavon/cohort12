@@ -5,6 +5,7 @@ import app.utility.db.TableGenerator;
 import app.utility.helper.ClassScanner;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.Connection;
 import java.sql.Statement;

@@ -204,6 +204,22 @@ CONTEXT DEPENDENCY INJECTION(CDI)
 
         -also inject datasource ---------assignment
 
+    PRODUCER
+        @Produces tells CDI container...that whenever
+        someone injects this class, use this method/logic
+        to create the instance.
+
+        CDI Container normally create instance on its
+        own way on injections...producers use my provide
+        method to create that instance and not your own
+        way.
+
+        Ways of using producer
+            -customize how contextual instance is created.
+            -use for object that cannot
+                directly be instantiated int, String,
+                CalculateAge
+
 
 EJB
 JPA & JTA (INCLUDE BEAN VALIDATION)

@@ -16,4 +16,5 @@ public class ListCourse extends BaseListAction<Course> {
     public GenericDao<Course,Integer> getGenericDao(){
         return courseDao;
     }
+
 }

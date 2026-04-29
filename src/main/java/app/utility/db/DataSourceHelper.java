@@ -4,6 +4,8 @@ import app.utility.bootstrap.InitBootstrap;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -15,11 +17,25 @@ public class DataSourceHelper {
 
     private static volatile HikariDataSource dataSource;
 
-    private final String HOST = "localhost";
-    private final int PORT = 3306;
-    private final String DB_NAME = "training_app";
-    private final String USER = "root";
-    private final String PASSWORD = "";
+    @Inject
+    @Named("dbParamHost")
+    private String dbParamHost;
+
+    @Inject
+    @Named("dbParamPort")
+    private int dbParamPort;
+
+    @Inject
+    @Named("dbParamName")
+    private String dbParamName;
+
+    @Inject
+    @Named("dbParamUser")
+    private String dbParamUser;
+
+    @Inject
+    @Named("dbParamPwd")
+    private String dbParamPwd;
 
     public DataSource getDataSource() {
         if (dataSource == null) {
@@ -28,12 +44,12 @@ public class DataSourceHelper {
                     HikariConfig config = new HikariConfig();
 
                     config.setJdbcUrl(
-                        "jdbc:mysql://" + HOST + ":" + PORT + "/" + DB_NAME +
+                        "jdbc:mysql://" + dbParamHost + ":" + dbParamPort + "/" + dbParamName +
                         "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
                     );
 
-                    config.setUsername(USER);
-                    config.setPassword(PASSWORD);
+                    config.setUsername(dbParamUser);
+                    config.setPassword(dbParamPwd);
 
                     config.setMaximumPoolSize(10);
                     config.setMinimumIdle(2);
@@ -51,19 +67,19 @@ public class DataSourceHelper {
     }
 
     public String getBaseUrlWithoutDB() {
-        return "jdbc:mysql://" + HOST + ":" + PORT +
+        return "jdbc:mysql://" + dbParamHost + ":" + dbParamPort +
            "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     }
 
     public String getDbName() {
-        return DB_NAME;
+        return dbParamName;
     }
 
     public String getUser() {
-        return USER;
+        return dbParamUser;
     }
 
     public String getPassword() {
-        return PASSWORD;
+        return dbParamPwd;
     }
 }

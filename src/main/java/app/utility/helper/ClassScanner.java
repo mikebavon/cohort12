@@ -2,14 +2,11 @@ package app.utility.helper;
 
 import app.framework.DbTable;
 import app.framework.PageMenuItem;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
 import org.reflections.Reflections;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Dependent
 public class ClassScanner {
 
     public Set<Class<?>> scanForDbTables(String basePackage) {

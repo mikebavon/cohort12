@@ -5,8 +5,6 @@ import app.framework.Cohort12Framework;
 import app.framework.Cohort12Table;
 import app.dao.GenericDao;
 import app.framework.PageContent;
-import app.utility.bootstrap.InitBootstrap;
-import app.utility.db.DataSourceHelper;
 import jakarta.inject.Inject;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -34,10 +32,6 @@ public class BaseAction<T> extends HttpServlet {
 
     @Inject
     protected Cohort12Framework framework;
-
-    @Inject
-    @InitBootstrap
-    private DataSourceHelper ds;
 
     @SuppressWarnings("unchecked")
     public T serializeForm(Map<String, String[]> requestMap) {
@@ -120,7 +114,6 @@ public class BaseAction<T> extends HttpServlet {
     }
 
     public GenericDao<T,Integer> getGenericDao(){
-        System.out.println("Generic Dao from Child..");
         return null;
     }
 
