@@ -1,8 +1,9 @@
 package app.action;
 
+import app.dao.TrainerDao;
+import app.dao.GenericDao;
 import app.model.Trainer;
 import app.utility.validation.Validate;
-import app.utility.validation.ValidateNationality;
 import app.utility.validation.ValidatorQualifier;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
@@ -20,6 +21,14 @@ import java.io.IOException;
                 @WebInitParam(name = "pageHeader", value = "Training Registration - IT")
         })
 public class RegisterTrainer extends BaseAction<Trainer> {
+
+        @Inject
+        private TrainerDao trainerDao;
+
+        @Override
+        public GenericDao<Trainer,Integer> getGenericDao(){
+                return trainerDao;
+        }
 
         @Inject
         @ValidatorQualifier(ValidatorQualifier.ValidationChoice.TRAINER)

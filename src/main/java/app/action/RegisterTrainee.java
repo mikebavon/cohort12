@@ -1,5 +1,7 @@
 package app.action;
 
+import app.dao.TraineeDao;
+import app.dao.GenericDao;
 import app.model.Trainee;
 import app.utility.general.TrainingApplication;
 import app.utility.validation.Validate;
@@ -21,6 +23,14 @@ public class RegisterTrainee extends BaseAction<Trainee> {
 
     @Inject
     public TrainingApplication trainingApplication;
+
+    @Inject
+    private TraineeDao traineeDao;
+
+    @Override
+    public GenericDao<Trainee,Integer> getGenericDao(){
+        return traineeDao;
+    }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException{

@@ -1,5 +1,7 @@
 package app.action;
 
+import app.dao.CourseDao;
+import app.dao.GenericDao;
 import app.model.Course;
 import app.utility.validation.Validate;
 import jakarta.inject.Inject;
@@ -13,6 +15,14 @@ import java.io.IOException;
 
 @WebServlet("/register_course")
 public class RegisterCourse extends BaseAction<Course> {
+
+    @Inject
+    private CourseDao courseDao;
+
+    @Override
+    public GenericDao<Course,Integer> getGenericDao(){
+        return courseDao;
+    }
 
     @Inject
     @Named("ValidCourse")

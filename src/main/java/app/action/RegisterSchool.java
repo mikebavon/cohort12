@@ -1,5 +1,7 @@
 package app.action;
 
+import app.dao.SchoolDao;
+import app.dao.GenericDao;
 import app.model.School;
 import app.utility.validation.Validate;
 import app.utility.validation.ValidatorQualifier;
@@ -19,6 +21,14 @@ import java.io.IOException;
             @WebInitParam(name = "pageHeader", value = "Training Registration - IT")
     })
 public class RegisterSchool extends BaseAction<School> {
+
+    @Inject
+    private SchoolDao schoolDao;
+
+    @Override
+    public GenericDao<School,Integer> getGenericDao(){
+        return schoolDao;
+    }
 
     @Inject
     @ValidatorQualifier(ValidatorQualifier.ValidationChoice.SCHOOL)

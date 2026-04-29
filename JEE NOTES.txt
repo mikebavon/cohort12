@@ -196,10 +196,11 @@ CONTEXT DEPENDENCY INJECTION(CDI)
 
         -Built in qualifiers
             -@Named
-                -Constructor ---- assignment
-                -Setter Method --- assignment
+                -Constructor ---- assignment.
+                -Setter Method --- assignment.
             -@Default
             -@Any
+            -@Alternatives -- assignment.
 
         -also inject datasource ---------assignment
 

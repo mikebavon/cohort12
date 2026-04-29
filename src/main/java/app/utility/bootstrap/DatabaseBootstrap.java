@@ -3,13 +3,10 @@ package app.utility.bootstrap;
 import app.utility.db.DataSourceHelper;
 import app.utility.db.TableGenerator;
 import app.utility.helper.ClassScanner;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Set;
 
@@ -20,17 +17,18 @@ public class DatabaseBootstrap implements Bootstrap {
     @Inject
     private ClassScanner clazzScanner;
 
+    @InitBootstrap
+    @Inject
+    private DataSourceHelper ds;
+
     @Override
     public void process() {
         try {
             createDatabaseIfNotExists();
 
-            DataSource ds = DataSourceHelper.getDataSource();
+            Set<Class<?>> entities = clazzScanner.scanForDbTables("app.model");
 
-            Set<Class<?>> entities =
-                    clazzScanner.scanForDbTables("app.model");
-
-            TableGenerator.generateTables(ds, entities);
+            TableGenerator.generateTables(ds.getConnection(), entities);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,14 +37,10 @@ public class DatabaseBootstrap implements Bootstrap {
 
     private void createDatabaseIfNotExists() {
 
-        try (Connection conn = DriverManager.getConnection(
-                DataSourceHelper.getBaseUrlWithoutDB(),
-                DataSourceHelper.getUser(),
-                DataSourceHelper.getPassword());
+        try (Connection conn = ds.getConnection();
              Statement stmt = conn.createStatement()) {
 
-            String sql = "CREATE DATABASE IF NOT EXISTS "
-                    + DataSourceHelper.getDbName();
+            String sql = "CREATE DATABASE IF NOT EXISTS " + ds.getDbName();
 
             stmt.executeUpdate(sql);
 

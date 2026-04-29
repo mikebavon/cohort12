@@ -6,22 +6,22 @@ import com.zaxxer.hikari.HikariDataSource;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @InitBootstrap
 @ApplicationScoped
 public class DataSourceHelper {
 
-    private static HikariDataSource dataSource;
+    private static volatile HikariDataSource dataSource;
 
-    private static final String HOST = "localhost";
-    private static final int PORT = 3306;
-    private static final String DB_NAME = "training_app";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private final String HOST = "localhost";
+    private final int PORT = 3306;
+    private final String DB_NAME = "training_app";
+    private final String USER = "root";
+    private final String PASSWORD = "";
 
-    private DataSourceHelper() {}
-
-    public static DataSource getDataSource() {
+    public DataSource getDataSource() {
         if (dataSource == null) {
             synchronized (DataSourceHelper.class) {
                 if (dataSource == null) {
@@ -46,20 +46,24 @@ public class DataSourceHelper {
         return dataSource;
     }
 
-    public static String getBaseUrlWithoutDB() {
+    public Connection getConnection() throws SQLException {
+        return this.getDataSource().getConnection();
+    }
+
+    public String getBaseUrlWithoutDB() {
         return "jdbc:mysql://" + HOST + ":" + PORT +
            "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     }
 
-    public static String getDbName() {
+    public String getDbName() {
         return DB_NAME;
     }
 
-    public static String getUser() {
+    public String getUser() {
         return USER;
     }
 
-    public static String getPassword() {
+    public String getPassword() {
         return PASSWORD;
     }
 }
