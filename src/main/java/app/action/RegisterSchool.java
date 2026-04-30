@@ -1,10 +1,13 @@
 package app.action;
 
+import app.bean.CourseBean;
+import app.bean.SchoolBean;
 import app.dao.SchoolDao;
 import app.dao.GenericDao;
 import app.model.School;
 import app.utility.validation.Validate;
 import app.utility.validation.ValidatorQualifier;
+import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebInitParam;
@@ -22,22 +25,12 @@ import java.io.IOException;
     })
 public class RegisterSchool extends BaseAction<School> {
 
-    @Inject
-    private SchoolDao schoolDao;
-
-    @Override
-    public GenericDao<School,Integer> getGenericDao(){
-        return schoolDao;
-    }
-
-    @Inject
-    @ValidatorQualifier(ValidatorQualifier.ValidationChoice.SCHOOL)
-    public Validate<School> validate;
+    @EJB
+    private SchoolBean schoolBean;
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        School school = super.serializeForm(req.getParameterMap());
-        if (validate.process(school))
+        if (schoolBean.save(super.serializeForm(req.getParameterMap())))
             super.doPost(req, resp);
         else
             resp.sendRedirect("./school_lists");

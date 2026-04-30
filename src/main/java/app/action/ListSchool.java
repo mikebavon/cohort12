@@ -1,19 +1,32 @@
 package app.action;
 
-import app.dao.SchoolDao;
-import app.dao.GenericDao;
+import app.bean.CourseBean;
+import app.bean.SchoolBean;
+import app.framework.PageContent;
+import app.model.Course;
 import app.model.School;
-import jakarta.inject.Inject;
+import jakarta.ejb.EJB;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 @WebServlet("/school_lists")
-public class ListSchool extends BaseListAction<School> {
+public class ListSchool extends BaseAction<School> {
 
-    @Inject
-    private SchoolDao schoolDao;
+    @EJB
+    private SchoolBean schoolBean;
 
     @Override
-    public GenericDao<School,Integer> getGenericDao(){
-        return schoolDao;
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setAttribute(PageContent.CONTENT.name(),
+                super.framework.htmlTable(getType(),
+                        schoolBean.list(new School())));
+        RequestDispatcher rd = request.getRequestDispatcher("./app_page");
+        rd.include(request, response);
     }
 }

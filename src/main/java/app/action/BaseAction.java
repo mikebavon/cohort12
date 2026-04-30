@@ -3,7 +3,6 @@ package app.action;
 
 import app.framework.Cohort12Framework;
 import app.framework.Cohort12Table;
-import app.dao.GenericDao;
 import app.framework.PageContent;
 import jakarta.inject.Inject;
 import jakarta.servlet.RequestDispatcher;
@@ -11,7 +10,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.ConvertUtilsBean;
@@ -25,7 +23,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 public class BaseAction<T> extends HttpServlet {
@@ -74,14 +71,6 @@ public class BaseAction<T> extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //if session exist use it, otherwise create a new one
-        HttpSession session = req.getSession();
-
-        try {
-            getGenericDao().save(this.serializeForm(req.getParameterMap()));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
         if (this.getType().isAnnotationPresent(Cohort12Table.class)) {
             resp.sendRedirect(this.getType()
                 .getAnnotation(Cohort12Table.class).tableUrl());
@@ -107,14 +96,6 @@ public class BaseAction<T> extends HttpServlet {
             (ParameterizedType) getClass().getGenericSuperclass();
 
         return (Class<T>) superClass.getActualTypeArguments()[0];
-    }
-
-    public List<T> returnData(){
-        return getGenericDao().findAll();
-    }
-
-    public GenericDao<T,Integer> getGenericDao(){
-        return null;
     }
 
 
