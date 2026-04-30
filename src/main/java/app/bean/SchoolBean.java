@@ -33,4 +33,24 @@ public class SchoolBean {
         return schoolDao.findAll();
     }
 
+    public boolean exist(School check) {
+        if (check == null || check.getSchoolName() == null)
+            return false;
+
+        List<School> schools = schoolDao.findAll();
+
+        boolean schoolFound = false;
+
+        for (School school : schools){
+            if (schoolFound)
+                break;
+
+            schoolFound = school.getSchoolName()
+                .equalsIgnoreCase(check.getSchoolName());
+        }
+
+        return schoolFound;
+
+    }
+
 }
