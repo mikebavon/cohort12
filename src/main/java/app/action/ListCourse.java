@@ -1,12 +1,9 @@
 package app.action;
 
 import app.bean.CourseBean;
-import app.dao.CourseDao;
-import app.dao.GenericDao;
 import app.framework.PageContent;
 import app.model.Course;
 import jakarta.ejb.EJB;
-import jakarta.inject.Inject;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
