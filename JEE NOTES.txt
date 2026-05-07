@@ -253,6 +253,10 @@ JEE -
                 - Queue - organize message for process, in point-to-point
                 - Topic - One sender - Many receivers( subscribers)
                         - All subscribers get the message when
+                        
+                Key difference (quick clarity)
+                    Queue → Point-to-point (1 consumer gets the message)
+                    Topic → Publish/Subscribe (multiple subscribers get the message)
 
             Observer same app, one system..system A
 
