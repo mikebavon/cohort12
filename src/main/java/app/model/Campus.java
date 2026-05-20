@@ -4,6 +4,7 @@ import app.framework.*;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Formula;
 
+
 @Entity
 @Table(name = "campuses")
 @Cohort12Form(label = "Register Campus", actionUrl = Campus.DOMAIN_NAME + "/save")

@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/*"})
+//@WebFilter(urlPatterns = {"/*"})
 public class LoginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
@@ -17,12 +17,14 @@ public class LoginFilter implements Filter {
 
         String defaultUri = httpRequest.getContextPath() + "/";
         String loginUri = httpRequest.getContextPath() + "/login";
+        String apiUri = httpRequest.getContextPath() + "/api/*";
         String indexUri = httpRequest.getContextPath() + "/index.jsp";
         String contactUsUri = "contact_us";
         String pageRequestUri = httpRequest.getRequestURI();
         boolean loggedIn = session != null && session.getAttribute("SESSION_ID") != null;
 
         if(loggedIn || pageRequestUri.equalsIgnoreCase(loginUri)
+                || pageRequestUri.equalsIgnoreCase(apiUri)
                 || pageRequestUri.equalsIgnoreCase(defaultUri)
                 || pageRequestUri.equalsIgnoreCase(indexUri)
                 || pageRequestUri.contains(contactUsUri)){

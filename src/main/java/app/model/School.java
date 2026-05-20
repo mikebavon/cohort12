@@ -1,6 +1,7 @@
 package app.model;
 
 import app.framework.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class School extends BaseEntity {
         this.schoolLocation = schoolLocation;
     }
 
+    @JsonIgnore
     public List<Campus> getCampuses() {
         return campuses;
     }
@@ -81,6 +83,7 @@ public class School extends BaseEntity {
         campuses.forEach(this::addCampus);
     }
 
+    @JsonIgnore
     public List<Course> getCourses() {
         return courses;
     }

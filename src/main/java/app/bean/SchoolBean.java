@@ -41,6 +41,10 @@ public class SchoolBean {
         return false;
     }
 
+    public School findById(Long id){
+        return schoolDao.findById(id);
+    }
+
     public boolean delete(Long id){
         if (id > 0 ) {
             auditTrailEvent.fire(new AuditTrail("School Deleted, ID: " + id));

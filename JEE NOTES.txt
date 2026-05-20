@@ -275,6 +275,7 @@ JEE -
 
 JPA & JTA (INCLUDE BEAN VALIDATION)
 JPA (java persistence API)
+    -hibernate, eclipse-link
     -collection of interfaces for objects to work with
     databases, instead of writing raw SQLs
         - Table == Class
@@ -325,10 +326,18 @@ f) Queries
         -getSingleResult
 
 
-
-
-WEB SERVICES
+WEB SERVICES - API over network
     -JAX-RS - REST
+        -RESTeasy
+        -Jersey
+        -Apache CXF
+        Core Annotation
+            -@Path
+            -@GET/@POST
+            -@Produces(MediaType)
+            -@Consumes(MediaType)
+            -@PathParam
+            -@QueryParam
     -JAX-WS - SOAP
     -WEBSOCKET
 JMS * done *
