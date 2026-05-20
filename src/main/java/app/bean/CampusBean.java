@@ -47,11 +47,7 @@ public class CampusBean {
     }
 
     public List<Campus> list(Campus filter){
-        List<Campus> campuses = campusDao.findAll();
-        for (Campus campus : campuses)
-            campus.setSchoolName(campus.getSchool().getSchoolName());
-
-        return campuses;
+        return campusDao.findAll();
 
     }
 

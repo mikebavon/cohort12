@@ -2,6 +2,7 @@ package app.model;
 
 import app.framework.*;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name = "courses",
@@ -27,8 +28,9 @@ public class Course extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private School school;
 
-    @Transient
     @Cohort12TableCol(label = "School")
+    @Formula("(select s.school_name from schools s " +
+        "where s.id=school_id)")
     private String schoolName;
 
     @Column(name = "course_category")
