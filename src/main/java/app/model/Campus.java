@@ -30,6 +30,13 @@ public class Campus extends BaseEntity {
     @Cohort12TableCol(label = "School")
     private String schoolName;
 
+    @Embedded
+    private Address address;
+
+    public Campus(){}
+
+    public Campus(String name){ this.name = name;}
+
     public String getName() {
         return name;
     }
@@ -60,5 +67,13 @@ public class Campus extends BaseEntity {
 
     public void setSchoolName(String schoolName) {
         this.schoolName = schoolName;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

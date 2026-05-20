@@ -310,6 +310,20 @@ e)Common Annotation
     @Transient
     @Embedded
     @MappedSuperclass for inheritance
+    @Index
+f) Queries
+    -em.find() load with the id
+    -em.getReference() ...special proxy
+
+    -em.createQuery()
+        -setParameter
+
+        -setFirstResult ---paging
+        -setMaxResults -- paging
+
+        -getResultList;
+        -getSingleResult
+
 
 
 

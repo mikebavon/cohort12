@@ -36,7 +36,7 @@ public class CampusBean {
         return campus;
     }
 
-    public boolean delete(Integer id){
+    public boolean delete(Long id){
         if (id > 0 ) {
             auditTrailEvent.fire(new AuditTrail("Campus Deleted, ID: " + id));
             campusDao.delete(id);

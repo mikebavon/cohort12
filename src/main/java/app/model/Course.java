@@ -4,7 +4,10 @@ import app.framework.*;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "courses")
+@Table(name = "courses",
+indexes = {
+    @Index(name = "courses_course_category", columnList = "course_category")
+})
 @Cohort12Form(label = "Course Register", actionUrl = "course/save")
 @Cohort12Table(label = "Courses", addLink = "course/add", deleteLink = "course/delete")
 public class Course extends BaseEntity {
@@ -27,6 +30,14 @@ public class Course extends BaseEntity {
     @Transient
     @Cohort12TableCol(label = "School")
     private String schoolName;
+
+    @Column(name = "course_category")
+    private String courseCategory;
+
+
+    public Course(){}
+
+    public Course(String name){ this.name = name;}
 
     public String getName() {
         return name;
@@ -58,5 +69,13 @@ public class Course extends BaseEntity {
 
     public void setSchoolName(String schoolName) {
         this.schoolName = schoolName;
+    }
+
+    public String getCourseCategory() {
+        return courseCategory;
+    }
+
+    public void setCourseCategory(String courseCategory) {
+        this.courseCategory = courseCategory;
     }
 }
